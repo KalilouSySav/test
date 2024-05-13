@@ -1,0 +1,36 @@
+Sub EnregistrerBrouillonOutlook()
+    Dim OutlookApp As Object
+    Dim OutlookMail As Object
+    Dim EmailSubject As String
+    Dim EmailBody As String
+    Dim Destinataire As String
+    
+    ' Créer une nouvelle instance de l'application Outlook
+    Set OutlookApp = CreateObject("Outlook.Application")
+    ' Créer un nouvel élément de courrier
+    Set OutlookMail = OutlookApp.CreateItem(0)
+    
+    ' Définir le sujet du courrier
+    EmailSubject = "Sujet de votre message"
+    ' Définir le destinataire du courrier
+    Destinataire = "exemple@email.com"
+    
+    ' Construire le corps du courrier
+    EmailBody = "Contenu de votre message :" & vbCrLf
+    ' Ajouter les informations dynamiques de votre enregistrement Excel
+    ' Par exemple, si vous souhaitez ajouter le contenu d'une cellule A1 :
+    EmailBody = EmailBody & "Informations dynamiques : " & ThisWorkbook.Sheets("Feuil1").Range("A1").Value
+    
+    ' Assigner les valeurs au courrier Outlook
+    With OutlookMail
+        .Subject = EmailSubject
+        .To = Destinataire
+        .Body = EmailBody
+        ' Optionnel : afficher le courrier avant de l'envoyer
+        .Display
+    End With
+    
+    ' Libérer les ressources
+    Set OutlookMail = Nothing
+    Set OutlookApp = Nothing
+End Sub
